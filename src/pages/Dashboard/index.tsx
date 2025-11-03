@@ -159,32 +159,13 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-          <TransactionList transactions={transactionsData || []} />
-          {/* 
-          <div className="mt-6 border-t border-gray-100">
-            {transactionsData?.map((tx, i) => (
-              <div
-                key={i}
-                className={`flex justify-between items-center py-5 ${
-                  i !== transactions.length - 1
-                    ? "border-b border-gray-100"
-                    : ""
-                }`}
-              >
-                <div className="flex items-start gap-4">
-                  <img src={IncomingIcon} alt="Incoming" className="w-6 h-6" />
-                  <div>
-                    <p className="font-medium text-gray-800">{tx.title}</p>
-                    <p className="text-sm text-gray-500">{tx.subtitle}</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium text-gray-800">{tx.amount}</p>
-                  <p className="text-sm text-gray-500">{tx.date}</p>
-                </div>
-              </div>
-            ))}
-          </div> */}
+          {transactionsData?.length === 0 || !transactionsData ? (
+            <p className="text-center text-gray-500 mt-10">
+              No transactions found.
+            </p>
+          ) : (
+            <TransactionList transactions={transactionsData || []} />
+          )}
         </div>
       </div>
       <FilterModal open={showFilter} onClose={() => setShowFilter(false)} />

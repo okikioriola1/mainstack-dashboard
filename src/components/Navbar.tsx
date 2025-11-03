@@ -6,6 +6,13 @@ import {
   BarChart3,
   MessageSquareMore,
   ChevronRight,
+  Settings,
+  ReceiptText,
+  Gift,
+  LayoutGrid,
+  Bug,
+  Users,
+  LogOut,
 } from "lucide-react";
 import MainstackLogo from "../assets/icons/mainstack-logo.svg";
 import HomeIcon from "../assets/icons/nav-home-icon.svg";
@@ -19,7 +26,9 @@ import MediaKitIcon from "../assets/icons/side-media-kit-icon.svg";
 import InvoicingIcon from "../assets/icons/side-invoicing-icon.svg";
 const Navbar = () => {
   const [appsOpen, setAppsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
   const apps = [
     {
       id: 1,
@@ -52,11 +61,29 @@ const Navbar = () => {
       icon: StoreIcon,
     },
   ];
+  const menuItems = [
+    { icon: <Settings size={16} />, label: "Settings" },
+    { icon: <ReceiptText size={16} />, label: "Purchase History" },
+    { icon: <Gift size={16} />, label: "Refer and Earn" },
+    { icon: <LayoutGrid size={16} />, label: "Integrations" },
+    { icon: <Bug size={16} />, label: "Report Bug" },
+    { icon: <Users size={16} />, label: "Switch Account" },
+    { icon: <LogOut size={16} />, label: "Sign Out" },
+  ];
 
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setAppsOpen(false);
+      }
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
+        setProfileOpen(false);
       }
     };
 
@@ -65,6 +92,7 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <nav className="w-[97%] mx-auto px-8 py-4 bg-white shadow-sm rounded-[100px]">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
@@ -106,13 +134,6 @@ const Navbar = () => {
             CRM
           </a>
 
-          {/* <a
-            href="#"
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-2xl px-3 py-1 font-medium text-sm transition"
-          >
-            <img src={AppsIcon} alt="logo" className="w-[18px] h-[18px]" />
-            Apps
-          </a> */}
           <div className="relative" ref={dropdownRef}>
             {!appsOpen && (
               <button
@@ -200,15 +221,49 @@ const Navbar = () => {
           <button className="p-2 text-gray-600 hover:text-gray-900 transition hidden md:block">
             <MessageSquareMore size={20} />
           </button>
-
-          <div className="flex items-center gap-3 bg-[#EFF1F6] px-3 py-1 rounded-full">
-            <div className="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center font-semibold text-white text-sm">
-              <h2>OJ</h2>
-            </div>
-
-            <button className="p-2 text-gray-600 hover:text-gray-900 transition">
-              <Menu size={20} />
+          <div className="relative" ref={profileRef}>
+            <button
+              onClick={() => setProfileOpen(!profileOpen)}
+              className="flex items-center gap-3 bg-[#EFF1F6] px-3 py-1 rounded-full hover:bg-gray-200 transition"
+            >
+              <div className="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center font-semibold text-white text-sm">
+                OJ
+              </div>
+              <Menu size={20} className="text-gray-600" />
             </button>
+
+            {/* Profile Dropdown Menu */}
+            {profileOpen && (
+              <div className="absolute top-full right-0 mt-3 w-80 bg-white rounded-3xl shadow-2xl p-6 z-50">
+                {/* Profile Header */}
+                <div className="flex items-center gap-4 pb-6 border-b border-gray-200 mb-6">
+                  <div className="w-14 h-14 bg-gray-900 rounded-full flex items-center justify-center font-semibold text-white text-lg flex-shrink-0">
+                    OJ
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-base">
+                      Olivier Jones
+                    </h3>
+                    <p className="text-gray-500 text-sm">
+                      olivierjones@gmail.com
+                    </p>
+                  </div>
+                </div>
+
+                {/* Menu Items */}
+                <div className="space-y-2 mb-6">
+                  {menuItems.map((item, index) => (
+                    <button
+                      key={index}
+                      className="w-full flex items-center gap-4 px-4 py-3 hover:bg-gray-50 rounded-xl transition text-gray-700 font-medium text-sm"
+                    >
+                      <span className="text-xl">{item.icon}</span>
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
