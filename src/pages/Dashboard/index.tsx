@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
-import { Info, Download, ChevronDown } from "lucide-react";
+import { Download, ChevronDown } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 // import IncomingIcon from "../../assets/icons/incoming.svg";
 // import OutgoingIcon from "../../assets/icons/outgoing.svg";
-import LinkInBioIcon from "../../assets/icons/side-link-in-bio-icon.svg";
-import StoreIcon from "../../assets/icons/side-store-icon.svg";
-import MediaKitIcon from "../../assets/icons/side-media-kit-icon.svg";
-import InvoicingIcon from "../../assets/icons/side-invoicing-icon.svg";
+// import LinkInBioIcon from "../../assets/icons/side-link-in-bio-icon.svg";
+// import StoreIcon from "../../assets/icons/side-store-icon.svg";
+// import MediaKitIcon from "../../assets/icons/side-media-kit-icon.svg";
+// import InvoicingIcon from "../../assets/icons/side-invoicing-icon.svg";
 import FilterModal from "../../components/FilterModal";
 import {
   fetchRevenueData,
@@ -18,13 +18,6 @@ import { SummaryItem } from "../../components/SummaryItem";
 import TransactionList from "../../components/TransactionList";
 import Sidebar from "../../components/Sidebar";
 
-const AmountItem = ({ label, amount }: { label: string; amount: string }) => (
-  <div className="flex flex-col">
-    <span className="text-sm text-gray-500">{label}</span>
-    <span className="text-lg font-semibold text-gray-900">{amount}</span>
-  </div>
-);
-
 const chartData = [
   { date: "Apr 1", amount: 400 },
   { date: "Apr 7", amount: 700 },
@@ -32,32 +25,32 @@ const chartData = [
   { date: "Apr 21", amount: 900 },
   { date: "Apr 30", amount: 600 },
 ];
-const summaryItems = [
-  { label: "Ledger Balance", value: "USD 0.00" },
-  { label: "Total Payout", value: "USD 55,080.00" },
-  { label: "Total Revenue", value: "USD 175,580.00" },
-  { label: "Pending Payout", value: "USD 0.00" },
-];
-const transactions = [
-  {
-    title: "Psychology of Money",
-    subtitle: "Roy Cash",
-    amount: "USD 600",
-    date: "Apr 03, 2022",
-  },
-  {
-    title: "Buy me a coffee",
-    subtitle: "Jonathan Smart",
-    amount: "USD 100",
-    date: "Apr 02, 2022",
-  },
-  {
-    title: "How to build an online brand",
-    subtitle: "Robert Jackson",
-    amount: "USD 100",
-    date: "Apr 02, 2022",
-  },
-];
+// const summaryItems = [
+//   { label: "Ledger Balance", value: "USD 0.00" },
+//   { label: "Total Payout", value: "USD 55,080.00" },
+//   { label: "Total Revenue", value: "USD 175,580.00" },
+//   { label: "Pending Payout", value: "USD 0.00" },
+// ];
+// const transactions = [
+//   {
+//     title: "Psychology of Money",
+//     subtitle: "Roy Cash",
+//     amount: "USD 600",
+//     date: "Apr 03, 2022",
+//   },
+//   {
+//     title: "Buy me a coffee",
+//     subtitle: "Jonathan Smart",
+//     amount: "USD 100",
+//     date: "Apr 02, 2022",
+//   },
+//   {
+//     title: "How to build an online brand",
+//     subtitle: "Robert Jackson",
+//     amount: "USD 100",
+//     date: "Apr 02, 2022",
+//   },
+// ];
 
 const formatCurrency = (amount: number) =>
   `USD ${amount.toLocaleString("en-US")}`;
@@ -71,7 +64,7 @@ const Dashboard = () => {
     fetchRevenueData().then((data) => setRevenueData(data));
     fetchTransactions().then((data) => setTransactionsData(data));
   }, []);
-  // console.log("User Data:", userData);
+  console.log("User Data:", userData);
   // console.log("revenue Data:", revenueData);
   // console.log("transactions Data:", transactionsData);
   return (

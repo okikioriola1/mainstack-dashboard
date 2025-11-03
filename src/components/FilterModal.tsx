@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { X, ChevronDown, Check } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 import DatePicker from "./DatePicker";
 
 const transactionTypes = [

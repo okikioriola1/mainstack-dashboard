@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LinkInBioIcon from "../assets/icons/side-link-in-bio-icon.svg";
 import StoreIcon from "../assets/icons/side-store-icon.svg";
 import MediaKitIcon from "../assets/icons/side-media-kit-icon.svg";

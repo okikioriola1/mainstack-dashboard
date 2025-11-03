@@ -1,11 +1,27 @@
-import React from "react";
 import IncomingIcon from "../assets/icons/incoming.svg";
 import OutgoingIcon from "../assets/icons/outgoing.svg";
 import formatDate from "../hooks/formatDate";
 // import { useTransactions } from "@/hooks/useTransactions";
 
-const TransactionList = ({ transactions }: { transactions: any }) => {
-  //   const { transactions } = useTransactions();
+type Metadata = {
+  name?: string;
+  type?: string;
+  email?: string;
+  quantity?: number;
+  country?: string;
+  product_name?: string;
+};
+
+type Transaction = {
+  amount: number;
+  metadata?: Metadata;
+  payment_reference?: string;
+  status: string;
+  type: "deposit" | "withdrawal";
+  date: string;
+};
+
+const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
   const formatCurrency = (amount: number) =>
     `USD ${amount.toLocaleString("en-US")}`;
   return (

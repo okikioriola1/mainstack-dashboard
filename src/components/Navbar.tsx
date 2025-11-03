@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
   Bell,
@@ -10,7 +10,7 @@ import {
 import MainstackLogo from "../assets/icons/mainstack-logo.svg";
 import HomeIcon from "../assets/icons/nav-home-icon.svg";
 import AnalyticsIcon from "../assets/icons/nav-analytics-icon.svg";
-import RevenueIcon from "../assets/icons/nav-crm-icon.svg";
+// import RevenueIcon from "../assets/icons/nav-crm-icon.svg";
 import CrmIcon from "../assets/icons/nav-crm-icon.svg";
 import AppsIcon from "../assets/icons/nav-apps-icon.svg";
 import LinkInBioIcon from "../assets/icons/side-link-in-bio-icon.svg";
@@ -19,7 +19,7 @@ import MediaKitIcon from "../assets/icons/side-media-kit-icon.svg";
 import InvoicingIcon from "../assets/icons/side-invoicing-icon.svg";
 const Navbar = () => {
   const [appsOpen, setAppsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const apps = [
     {
       id: 1,
@@ -53,9 +53,8 @@ const Navbar = () => {
     },
   ];
 
-  // Handle click outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setAppsOpen(false);
       }
@@ -218,36 +217,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// <nav className="w-[97%] mx-auto flex justify-between items-center px-8 py-4 bg-white shadow-sm rounded-[100px]">
-//   <div className="flex w-[60%] items-center justify-between gap-8">
-//     <div className="font-black text-2xl text-gray-900">
-//       <img src={MainstackLogo} alt="logo" className="w-[36px] h-[36px]" />
-//     </div>
-//     <div className="flex items-center gap-6 text-gray-700 font-medium">
-//       <a href="#">Home</a>
-//       <a href="#">Analytics</a>
-//       <a href="#" className="font-bold text-black border-b-2 border-black">
-//         Revenue
-//       </a>
-//       <a href="#">CRM</a>
-//       <div className="relative">
-//         <button
-//           onClick={() => setOpen(!open)}
-//           className="flex items-center gap-2 px-3 py-1 bg-black text-white rounded-full"
-//         >
-//           Link in Bio <ChevronDown size={16} />
-//         </button>
-//         {/* {open && <AppDropdown />} */}
-//       </div>
-//     </div>
-//   </div>
-
-//   <div className="flex items-center gap-6">
-//     <Bell className="text-gray-700" />
-//     <Menu className="text-gray-700" />
-//     <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-semibold">
-//       OJ
-//     </div>
-//   </div>
-// </nav>
