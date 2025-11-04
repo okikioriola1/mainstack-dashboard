@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import { Download, ChevronDown } from "lucide-react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
-// import IncomingIcon from "../../assets/icons/incoming.svg";
-// import OutgoingIcon from "../../assets/icons/outgoing.svg";
-// import LinkInBioIcon from "../../assets/icons/side-link-in-bio-icon.svg";
-// import StoreIcon from "../../assets/icons/side-store-icon.svg";
-// import MediaKitIcon from "../../assets/icons/side-media-kit-icon.svg";
-// import InvoicingIcon from "../../assets/icons/side-invoicing-icon.svg";
+
 import FilterModal from "../../components/FilterModal";
 import {
   fetchRevenueData,
@@ -64,13 +59,11 @@ const Dashboard = () => {
     fetchRevenueData().then((data) => setRevenueData(data));
     fetchTransactions().then((data) => setTransactionsData(data));
   }, []);
-  console.log("User Data:", userData);
-  // console.log("revenue Data:", revenueData);
-  // console.log("transactions Data:", transactionsData);
+
   return (
     <div className="relative font-degular bg-white min-h-screen mt-30 w-full">
       <div className="fixed z-[5] top-5 w-full">
-        <Navbar />
+        <Navbar userData={userData} />
       </div>
       <Sidebar />
 
@@ -91,7 +84,6 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="mt-10 grid grid-cols-3 gap-10">
-              {/* Chart */}
               <div className="col-span-2">
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={chartData}>

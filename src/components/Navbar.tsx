@@ -24,7 +24,13 @@ import LinkInBioIcon from "../assets/icons/side-link-in-bio-icon.svg";
 import StoreIcon from "../assets/icons/side-store-icon.svg";
 import MediaKitIcon from "../assets/icons/side-media-kit-icon.svg";
 import InvoicingIcon from "../assets/icons/side-invoicing-icon.svg";
-const Navbar = () => {
+
+type UserData = {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+};
+const Navbar = ({ userData }: { userData?: UserData }) => {
   const [appsOpen, setAppsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -62,13 +68,16 @@ const Navbar = () => {
     },
   ];
   const menuItems = [
-    { icon: <Settings size={16} />, label: "Settings" },
-    { icon: <ReceiptText size={16} />, label: "Purchase History" },
-    { icon: <Gift size={16} />, label: "Refer and Earn" },
-    { icon: <LayoutGrid size={16} />, label: "Integrations" },
-    { icon: <Bug size={16} />, label: "Report Bug" },
-    { icon: <Users size={16} />, label: "Switch Account" },
-    { icon: <LogOut size={16} />, label: "Sign Out" },
+    { icon: <Settings size={16} color="#131316" />, label: "Settings" },
+    {
+      icon: <ReceiptText size={16} color="#131316" />,
+      label: "Purchase History",
+    },
+    { icon: <Gift size={16} color="#131316" />, label: "Refer and Earn" },
+    { icon: <LayoutGrid size={16} color="#131316" />, label: "Integrations" },
+    { icon: <Bug size={16} color="#131316" />, label: "Report Bug" },
+    { icon: <Users size={16} color="#131316" />, label: "Switch Account" },
+    { icon: <LogOut size={16} color="#131316" />, label: "Sign Out" },
   ];
 
   useEffect(() => {
@@ -232,30 +241,28 @@ const Navbar = () => {
               <Menu size={20} className="text-gray-600" />
             </button>
 
-            {/* Profile Dropdown Menu */}
             {profileOpen && (
               <div className="absolute top-full right-0 mt-3 w-80 bg-white rounded-3xl shadow-2xl p-6 z-50">
-                {/* Profile Header */}
                 <div className="flex items-center gap-4 pb-6 border-b border-gray-200 mb-6">
                   <div className="w-14 h-14 bg-gray-900 rounded-full flex items-center justify-center font-semibold text-white text-lg flex-shrink-0">
                     OJ
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 text-base">
-                      Olivier Jones
+                      {`${userData?.first_name} ${userData?.last_name}` ||
+                        `Olivier Jones`}
                     </h3>
                     <p className="text-gray-500 text-sm">
-                      olivierjones@gmail.com
+                      {userData?.email || "olivierjones@gmail.com"}
                     </p>
                   </div>
                 </div>
 
-                {/* Menu Items */}
                 <div className="space-y-2 mb-6">
                   {menuItems.map((item, index) => (
                     <button
                       key={index}
-                      className="w-full flex items-center gap-4 px-4 py-3 hover:bg-gray-50 rounded-xl transition text-gray-700 font-medium text-sm"
+                      className="w-full flex items-center gap-4 px-4 py-3 hover:bg-gray-50 rounded-xl transition text-[#131316] font-medium text-xs"
                     >
                       <span className="text-xl">{item.icon}</span>
                       {item.label}
