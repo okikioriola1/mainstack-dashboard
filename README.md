@@ -2,6 +2,8 @@
 
 A React and TypeScript frontend for viewing a creator's wallet balance, revenue summary, and transaction history. The project explores dashboard composition, API integration, charts, and transaction filter controls.
 
+[View the hosted demo](https://mainstack-dashboard-eta.vercel.app)
+
 ![Revenue dashboard with sample API responses](docs/screenshots/dashboard.png)
 
 *The screenshot uses mocked API responses. The chart uses the sample series defined in the frontend.*
