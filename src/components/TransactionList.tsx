@@ -3,23 +3,7 @@ import OutgoingIcon from "../assets/icons/outgoing.svg";
 import formatDate from "../hooks/formatDate";
 // import { useTransactions } from "@/hooks/useTransactions";
 
-type Metadata = {
-  name?: string;
-  type?: string;
-  email?: string;
-  quantity?: number;
-  country?: string;
-  product_name?: string;
-};
-
-type Transaction = {
-  amount: number;
-  metadata?: Metadata;
-  payment_reference?: string;
-  status: string;
-  type: "deposit" | "withdrawal";
-  date: string;
-};
+import type { Transaction } from "../api/types";
 
 const TransactionList = ({ transactions }: { transactions: Transaction[] }) => {
   const formatCurrency = (amount: number) =>

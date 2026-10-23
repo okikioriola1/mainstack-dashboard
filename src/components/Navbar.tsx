@@ -25,11 +25,7 @@ import StoreIcon from "../assets/icons/side-store-icon.svg";
 import MediaKitIcon from "../assets/icons/side-media-kit-icon.svg";
 import InvoicingIcon from "../assets/icons/side-invoicing-icon.svg";
 
-type UserData = {
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-};
+import type { UserData } from "../api/types";
 const Navbar = ({ userData }: { userData?: UserData }) => {
   const [appsOpen, setAppsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -249,8 +245,10 @@ const Navbar = ({ userData }: { userData?: UserData }) => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 text-base">
-                      {`${userData?.first_name} ${userData?.last_name}` ||
-                        `Olivier Jones`}
+                      {[userData?.first_name, userData?.last_name]
+                        .filter(Boolean)
+                        .join(" ")
+                        .trim() || "Olivier Jones"}
                     </h3>
                     <p className="text-gray-500 text-sm">
                       {userData?.email || "olivierjones@gmail.com"}

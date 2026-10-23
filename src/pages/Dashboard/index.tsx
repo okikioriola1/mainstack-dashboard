@@ -12,6 +12,7 @@ import {
 import { SummaryItem } from "../../components/SummaryItem";
 import TransactionList from "../../components/TransactionList";
 import Sidebar from "../../components/Sidebar";
+import type { Transaction, UserData, Wallet } from "../../api/types";
 
 const chartData = [
   { date: "Apr 1", amount: 400 },
@@ -51,9 +52,9 @@ const formatCurrency = (amount: number) =>
   `USD ${amount.toLocaleString("en-US")}`;
 const Dashboard = () => {
   const [showFilter, setShowFilter] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
-  const [revenueData, setRevenueData] = useState<any>(null);
-  const [transactionsData, setTransactionsData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData>();
+  const [revenueData, setRevenueData] = useState<Wallet>();
+  const [transactionsData, setTransactionsData] = useState<Transaction[]>();
   useEffect(() => {
     fetchUserData().then((data) => setUserData(data));
     fetchRevenueData().then((data) => setRevenueData(data));

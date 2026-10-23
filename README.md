@@ -1,73 +1,70 @@
-# React + TypeScript + Vite
+# Mainstack Revenue Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React and TypeScript frontend for viewing a creator's wallet balance, revenue summary, and transaction history. The project explores dashboard composition, API integration, charts, and transaction filter controls.
 
-Currently, two official plugins are available:
+[View the hosted demo](https://mainstack-dashboard-eta.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![Revenue dashboard with sample API responses](docs/screenshots/dashboard.png)
 
-## React Compiler
+*The screenshot uses mocked API responses. The chart uses the sample series defined in the frontend.*
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Wallet summaries for available balance, ledger balance, revenue, and payouts.
+- API-backed user details and transaction list, with deposit and withdrawal presentation.
+- Revenue chart built with Recharts.
+- Filter panel with date, transaction type, and status selections.
+- App and profile dropdown menus.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+The filter panel currently stores selections locally; applying them does not filter the transaction list. Withdraw and export controls are interface placeholders.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+React 19, TypeScript, Vite, Tailwind CSS, Axios, Recharts, and Lucide icons.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Run locally
+
+Use Node.js 24 and npm.
+
+```bash
+git clone https://github.com/okikioriola1/mainstack-dashboard.git
+cd mainstack-dashboard
+npm ci
+cp .env.example .env.local
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Set `VITE_API_BASE_URL` in `.env.local` to your API's base URL before starting Vite. The example `http://localhost:3001` is a configuration example; this repository does not include an API server. Open the URL printed by Vite. Restart Vite after changing environment variables.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### API contract
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The frontend makes three GET requests relative to `VITE_API_BASE_URL`. Return JSON directly, without a wrapper object:
+
+| Endpoint | Expected response |
+| --- | --- |
+| `/user` | Object with optional `first_name`, `last_name`, and `email` fields |
+| `/wallet` | Object with numeric `balance`, `ledger_balance`, `total_payout`, `total_revenue`, and `pending_payout` fields |
+| `/transactions` | Array of transactions with `amount`, `status`, `type` (`deposit` or `withdrawal`), and `date`; optional `metadata` and `payment_reference` |
+
+See [the response types](src/api/types.ts) and [API client](src/api/revenueApi.ts). Enable CORS for the frontend origin when hosting the API separately. Vite exposes `VITE_` variables in the browser bundle, so use public configuration only.
+
+## Checks
+
+```bash
+npm run lint
+npm run build
+npm run preview
 ```
+
+GitHub Actions runs lint and production build checks on pushes and pull requests. There is currently no automated test suite.
+
+## Code map
+
+- `src/api/`: requests and shared response types.
+- `src/pages/Dashboard/`: data fetching and dashboard layout.
+- `src/components/`: navigation, summaries, transactions, filters, and date picker.
+- `src/hooks/formatDate.ts`: transaction date formatting.
+
+## Next improvements
+
+Connect filters and export to transaction data, add loading and API error states, replace the sample chart with API data, and test the filtering workflow.
